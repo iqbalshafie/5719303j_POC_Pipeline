@@ -1,0 +1,61 @@
+pipeline {
+    agent any
+    stages {
+        stage('ST1 5719303j') {
+            steps {
+                echo "ST1 5719303j: Environment is prepared. Start to rollout to TEST server"
+            }
+        }
+
+        stage('ST2 5719303j') {
+            steps {
+                echo "ST2 5719303j: TEST server is backup and updated"
+                sh 'bolt script run /path/to/5719303)_script'
+            }
+        }
+
+        stage('ST3 5719303j') {
+            steps {
+                echo "ST3 5719303j: Test result for TEST server is generated  : TEST-result-file"
+                sh 'curl –Is http://TESTsvr5719303j.localdomain|head –n 1  > /tmp/TEST-result-file'
+            }
+        }
+
+        stage('ST4 5719303j') {
+            steps {
+                def testResult = readFile('TEST-result-file')
+                echo "ST4 5719303j: TEST server’s testing result has been inspected"
+            }
+        }
+
+        stage('ST5 5719303j') {
+            steps {
+                def choice = input(id: 'choice', message: 'Choice: Proceed Production or RollBack Test?', parameters: [
+                    [$class: 'ChoiceParameterDefinition', choices: ['Proceed Production', 'Rollback Test'], description: '', name: 'choice']
+                ])
+
+                if (choice == 'Proceed Production') {
+                    echo "ST5 5719303j: Proceed to Production Phase"
+                    sh 'bolt script run /path/to/5719303)_script'
+                } else {
+                    echo "ST5 5719303j: Rollback TEST server"
+                    sh 'bolt script run /path/to/rollback_script'
+                }
+
+                env.CHOICE = choice
+            }
+        }
+
+        stage('ST6 5719303j') {
+            steps {
+                def choice = env.CHOICE
+
+                if (choice == 'Proceed Production') {
+                    echo "ST6 5719303j: Production server is updated"
+                } else {
+                    echo "ST6 5719303j: TEST server is rolled back"
+                }
+            }
+        }
+    }
+}
