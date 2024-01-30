@@ -31,7 +31,7 @@ pipeline {
         stage('ST5 5719303j') {
             steps {
                 def choice = input(id: 'choice', message: 'Choice: Proceed Production or RollBack Test?', parameters: [
-                    [$class: 'ChoiceParameterDefinition', choices: ['Proceed Production', 'Rollback Test'], description: '', name: 'choice']
+                    [$class: 'ChoiceParameterDefinition', choices: ['Proceed Production', 'Rollback Test'], name: 'choice']
                 ])
 
                 if (choice == 'Proceed Production') {
