@@ -10,7 +10,7 @@ pipeline {
         stage('ST2 5719303j') {
             steps {
                 echo "ST2 5719303j: TEST server is backup and updated"
-                sh 'bolt script run /path/to/5719303)_script'
+                sh 'bolt script run /path/to/5719303_script'  // Corrected script path
             }
         }
 
@@ -39,7 +39,7 @@ pipeline {
 
                     if (choice == 'Proceed Production') {
                         echo "ST5 5719303j: Proceed to Production Phase"
-                        sh 'bolt script run /path/to/5719303)_script'
+                        sh 'bolt script run /path/to/5719303_script'  // Corrected script path
                     } else {
                         echo "ST5 5719303j: Rollback TEST server"
                         sh 'bolt script run /path/to/rollback_script'
