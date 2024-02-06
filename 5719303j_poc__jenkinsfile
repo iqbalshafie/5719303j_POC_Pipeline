@@ -23,37 +23,43 @@ pipeline {
 
         stage('ST4 5719303j') {
             steps {
-                def testResult = readFile('TEST-result-file')
-                echo "ST4 5719303j: TEST server’s testing result has been inspected"
+                script {
+                    def testResult = readFile('TEST-result-file').trim()
+                    echo "ST4 5719303j: TEST server’s testing result has been inspected"
+                }
             }
         }
 
         stage('ST5 5719303j') {
             steps {
-                def choice = input(id: 'choice', message: 'Choice: Proceed Production or RollBack Test?', parameters: [
-                    [$class: 'ChoiceParameterDefinition', choices: ['Proceed Production', 'Rollback Test'], name: 'choice']
-                ])
+                script {
+                    def choice = input(id: 'choice', message: 'Choice: Proceed Production or RollBack Test?', parameters: [
+                        [$class: 'ChoiceParameterDefinition', choices: ['Proceed Production', 'Rollback Test'], name: 'choice']
+                    ])
 
-                if (choice == 'Proceed Production') {
-                    echo "ST5 5719303j: Proceed to Production Phase"
-                    sh 'bolt script run /path/to/5719303)_script'
-                } else {
-                    echo "ST5 5719303j: Rollback TEST server"
-                    sh 'bolt script run /path/to/rollback_script'
+                    if (choice == 'Proceed Production') {
+                        echo "ST5 5719303j: Proceed to Production Phase"
+                        sh 'bolt script run /path/to/5719303)_script'
+                    } else {
+                        echo "ST5 5719303j: Rollback TEST server"
+                        sh 'bolt script run /path/to/rollback_script'
+                    }
+
+                    env.CHOICE = choice
                 }
-
-                env.CHOICE = choice
             }
         }
 
         stage('ST6 5719303j') {
             steps {
-                def choice = env.CHOICE
+                script {
+                    def choice = env.CHOICE
 
-                if (choice == 'Proceed Production') {
-                    echo "ST6 5719303j: Production server is updated"
-                } else {
-                    echo "ST6 5719303j: TEST server is rolled back"
+                    if (choice == 'Proceed Production') {
+                        echo "ST6 5719303j: Production server is updated"
+                    } else {
+                        echo "ST6 5719303j: TEST server is rolled back"
+                    }
                 }
             }
         }
