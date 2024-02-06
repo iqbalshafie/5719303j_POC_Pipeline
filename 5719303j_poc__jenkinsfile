@@ -10,14 +10,14 @@ pipeline {
         stage('ST2 5719303j') {
             steps {
                 echo "ST2 5719303j: TEST server is backup and updated"
-                sh 'bolt script run /path/to/5719303_script'  // Corrected script path
+                sh 'bolt script run ‘/root/5719303j_script’ -t TESTsvr5719303j.localdomain,PRODsvr5719303j.localdomain  -u clientadm -p user123  --no-host-key-check' 
             }
         }
 
         stage('ST3 5719303j') {
             steps {
                 echo "ST3 5719303j: Test result for TEST server is generated  : TEST-result-file"
-                sh 'curl –Is http://TESTsvr5719303j.localdomain|head –n 1  > /tmp/TEST-result-file'
+                sh 'curl –is http://TESTsvr5719303j.localdomain|head –n 1  > /tmp/TEST-result-file'
             }
         }
 
