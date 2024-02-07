@@ -12,12 +12,12 @@ pipeline {
                 echo "ST2 5719303j: TEST server is backup and updated"
                 sh '''#!/bin/bash
                  puppet resource file /tmp/5719303jwork ensure=absent force=true;
-                 puppet resource file /tmp/5719303j/work ensure=directory;
-	   cd /tmp/5719303j/work;
+                 puppet resource file /tmp/5719303jwork ensure=directory;
+	   cd /tmp/5719303jwork;
 	   git clone https://github.com/iqbalshafie/POC_REPO.git;
                  target1=TESTsvr5719303j;
 		 target2=PRODsvr5719303j;
-                 locate_script='/tmp/5719303j/work/POC_REPO/5719303j_script';
+                 locate_script='/tmp/5719303jwork/POC_REPO/5719303j_script';
                  bolt script run $locate_script -t $target1,$target2 -u 5719303j -p user123 --no-host-key-check --run-as root; 
 		'''
 		}
