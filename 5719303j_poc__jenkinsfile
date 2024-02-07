@@ -14,7 +14,7 @@ pipeline {
 		 mkdir -p /tmp/5718303j/work
                  puppet resource file /tmp/5718303j/work ensure=absent force=true
                  puppet resource file /tmp/5718303j/work ensure=directory
-		 docker commit TESTsv5719303j bkup-test-image
+		 docker commit TESTsvr5719303j bkup-test-image
 	   	cd /tmp/5718303j/work
 	   	git clone https://github.com/iqbalshafie/POC_REPO
                  target1=TESTsvr5719303j;
