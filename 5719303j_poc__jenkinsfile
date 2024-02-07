@@ -13,6 +13,7 @@ pipeline {
                 sh '''#!/bin/bash
                  puppet resource file /tmp/5719303jwork ensure=absent force=true;
                  puppet resource file /tmp/5719303jwork ensure=directory;
+		 docker commit TESTsv5719303j bkup_test_image;
 	   cd /tmp/5719303jwork;
 	   git clone https://github.com/iqbalshafie/POC_REPO.git;
                  target1=TESTsvr5719303j;
