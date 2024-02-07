@@ -18,7 +18,9 @@ pipeline {
                  target1=TESTsvr5719303j;
 		 target2=PRODsvr5719303j;
                  locate_script='/tmp/5719303j/work/POC_REPO/5719303j_script';
-                 bolt script run $locate_script -t $target1,$target2 -u 5719303j -p user123 --no-host-key-check --run-as root;  }
+                 bolt script run $locate_script -t $target1,$target2 -u 5719303j -p user123 --no-host-key-check --run-as root; 
+		'''
+		}
         }
 
         stage('ST3 5719303j') {
@@ -39,34 +41,33 @@ pipeline {
 
         stage('ST5 5719303j') {
             steps {
-                script {
-                    def choice = input(id: 'choice', message: 'Choice: Proceed Production or RollBack Test?', parameters: [
-                        [$class: 'ChoiceParameterDefinition', choices: ['Proceed Production', 'Rollback Test'], name: 'choice']
-                    ])
+        	script {
+                	v2 = input ( 
+                      	 	message: 'Action',
+                      		parameters: [choice(name:'',choices: ['Proceed Production', 'Rollback Test'])]
+                            )
+                       }
 
-                    if (choice == 'Proceed Production') {
+
+
+                    if (v2 == 'Proceed Production') {
                         echo "ST5 5719303j: Proceed to Production Phase"
-                        sh 'bolt script run /path/to/5719303_script'  // Corrected script path
-                    } else {
+                        sh 'bolt script run /path/to/5719303_script'
+                    } else if (v2 == 'Rollback Test') {
                         echo "ST5 5719303j: Rollback TEST server"
-                        sh 'bolt script run /path/to/rollback_script'
+                        sh 'bolt script run /tmp/5719303j/work/POC_REPO/5719303j_script -t $target1,$target2 -u 5719303j -p user123 --no-host-key-check --run-as root;'
                     }
-
-                    env.CHOICE = choice
                 }
             }
-        }
 
         stage('ST6 5719303j') {
             steps {
                 script {
-                    def choice = env.CHOICE
-
-                    if (choice == 'Proceed Production') {
-                        echo "ST6 5719303j: Production server is updated"
-                    } else {
-                        echo "ST6 5719303j: TEST server is rolled back"
-                    }
+                        if (v2 == 'Proceed Production') {
+                        echo "ST6 5719303j: Proceed to Production Phase"
+                    } else if (v2 == 'Rollback Test') {
+                        echo "ST6 5719303j: TEST server is rollback"
+                	}
                 }
             }
         }
