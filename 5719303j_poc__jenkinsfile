@@ -18,7 +18,7 @@ pipeline {
 		cd /tmp/5719303j/work
 	   	git clone https://github.com/iqbalshafie/POC_REPO
                 target1=TESTsvr5719303j
-                locate_script='/tmp/5719303j/work/POC_REPO/5719303j_script'
+                locate_script='/POC_REPO/5719303j_script'
                 bolt script run $locate_script -t $target1 -u clientadm -p user123 --no-host-key-check --run-as root;
 		'''
 		}
