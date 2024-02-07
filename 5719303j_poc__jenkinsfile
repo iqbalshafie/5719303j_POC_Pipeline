@@ -39,35 +39,33 @@ pipeline {
             }
         }
 
-        stage('ST5 5719303j') {
+       stage('ST5 5719303j') {
             steps {
-        	script {
-                	v2 = input ( 
-                      	 	message: 'Action',
-                      		parameters: [choice(name:'',choices: ['Proceed Production', 'Rollback Test'])]
-                            )
-                       }
-
-
+                script {
+                    v2 = input(
+                        message: 'Action',
+                        parameters: [choice(name: '', choices: ['Proceed Production', 'Rollback Test'])]
+                    )
 
                     if (v2 == 'Proceed Production') {
                         echo "ST5 5719303j: Proceed to Production Phase"
                         sh 'bolt script run /path/to/5719303_script'
                     } else if (v2 == 'Rollback Test') {
                         echo "ST5 5719303j: Rollback TEST server"
-                        sh 'bolt script run /tmp/5719303j/work/POC_REPO/5719303j_script -t $target1,$target2 -u 5719303j -p user123 --no-host-key-check --run-as root;'
+                        sh "bolt script run $LOCATE_SCRIPT -t $target1,$target2 -u 5719303j -p user123 --no-host-key-check --run-as root;"
                     }
                 }
             }
+        }
 
         stage('ST6 5719303j') {
             steps {
                 script {
-                        if (v2 == 'Proceed Production') {
+                    if (v2 == 'Proceed Production') {
                         echo "ST6 5719303j: Proceed to Production Phase"
                     } else if (v2 == 'Rollback Test') {
                         echo "ST6 5719303j: TEST server is rollback"
-                	}
+                    }
                 }
             }
         }
