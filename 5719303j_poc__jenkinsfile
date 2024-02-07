@@ -3,11 +3,6 @@ pipeline {
     stages {
         stage('ST1 5719303j') {
             steps {
-                echo "ST1 5719303j: Environment is prepared. Start to rollout to TEST server"pipeline {
-    agent any
-    stages {
-        stage('ST1 5719303j') {
-            steps {
                 echo "ST1 5719303j: Environment is prepared. Start to rollout to TEST server"
             }
         }
