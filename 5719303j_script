@@ -3,9 +3,9 @@ apt-get update
 puppet resource package git ensure=present
 puppet resource package apache2 ensure=present
 puppet resource service apache2 ensure=running
-puppet resource file /tmp/clone ensure=absent force=true
-puppet resource file /tmp/clone ensure=directory
-cd /tmp/clone
-git clone https://<your token>@github.com/<your repo>/devops_repo.git
-cp -p /tmp/clone/devops_repo/index.html /var/www/html
+puppet resource file /tmp/5719303j/work ensure=absent force=true
+puppet resource file /tmp/5719303j/work ensure=directory
+cd /tmp/5719303j/work
+git clone https://github.com/iqbalshafie/POC_REPO.git
+cp -p /tmp/5719303j/work/POC_REPO/5719303j_index.html /var/www/html
 
