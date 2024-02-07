@@ -11,7 +11,6 @@ pipeline {
             steps {
                 echo "ST2 5719303j: TEST server is backup and updated"
                 sh '''#!/bin/bash
-		 mkdir -p /tmp/5719303j
 		 mkdir -p /tmp/5719303j/work
                  puppet resource file /tmp/5719303j/work ensure=absent force=true
                  puppet resource file /tmp/5719303j/work ensure=directory
