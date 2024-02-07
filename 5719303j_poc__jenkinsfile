@@ -36,8 +36,12 @@ pipeline {
         stage('ST4 5719303j') {
             steps {
                 script {
-                    def testResult = readFile('TEST-result-file').trim()
+                    // def testResult = readFile('TEST-result-file').trim()
                     echo "ST4 5719303j: TEST server’s testing result has been inspected"
+                    v2 = input(
+                        message: 'Action',
+                        parameters: [choice(name: '', choices: ['Proceed Production', 'Rollback Test'])]
+                    )
                 }
             }
         }
