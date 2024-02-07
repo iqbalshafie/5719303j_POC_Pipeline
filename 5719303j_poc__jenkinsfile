@@ -10,8 +10,15 @@ pipeline {
         stage('ST2 5719303j') {
             steps {
                 echo "ST2 5719303j: TEST server is backup and updated"
-                sh 'bolt script run ‘/root/5719303j_script’ -t TESTsvr5719303j.localdomain,PRODsvr5719303j.localdomain  -u clientadm -p user123  --no-host-key-check' 
-            }
+                sh '''#!/bin/bash
+                 puppet resource file /tmp/5719303jwork ensure=absent force=true;
+                 puppet resource file /tmp/5719303jwork ensure=directory;
+	   cd /tmp/5719303j/work;
+	   git clone https://github.com/iqbalshafie/POC_REPO.git;
+                 target1=TESTsvr5719303j;
+		 target2=PRODsvr5719303j;
+                 locate_script='/tmp/clone/devops_repo/5719303j_script';
+                 bolt script run $locate_script -t $target1,$target2 -u 5719303j -p user123 --no-host-key-check --run-as root;  }
         }
 
         stage('ST3 5719303j') {
