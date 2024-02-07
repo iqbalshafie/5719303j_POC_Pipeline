@@ -11,14 +11,14 @@ pipeline {
             steps {
                 echo "ST2 5719303j: TEST server is backup and updated"
                 sh '''#!/bin/bash
-		 mkdir -p /tmp/5718303j/work
-                 puppet resource file /tmp/5718303j/work ensure=absent force=true
-                 puppet resource file /tmp/5718303j/work ensure=directory
+		 mkdir -p /tmp/5719303j/work
+                 puppet resource file /tmp/5719303j/work ensure=absent force=true
+                 puppet resource file /tmp/5719303j/work ensure=directory
 		 docker commit TESTsvr5719303j bkup-test-image
 	   	cd /tmp/5718303j/work
 	   	git clone https://github.com/iqbalshafie/POC_REPO
                  target1=TESTsvr5719303j
-                 locate_script='/tmp/5718303j/work/POC_REPO/5719303j_script'
+                 locate_script='/tmp/5719303j/work/POC_REPO/5719303j_script'
                  bolt script run $locate_script -t $target1 -u 5719303j -p user123 --no-host-key-check --run-as root;
 		'''
 		}
